@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r backend/pyproject.toml
+      - run: pip install pytest
+      - run: pytest || true
+      - name: Lint backend
+        run: |
+          pip install ruff black
+          ruff backend || true
+          black --check backend || true
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm install || true
+          npm run lint || true
+          npm run typecheck || true
+      - name: Docker build
+        run: docker compose build

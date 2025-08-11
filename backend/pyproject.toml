@@ -1,0 +1,14 @@
+[project]
+name = "pentest-backend"
+version = "0.1.0"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic",
+  "celery",
+  "redis",
+  "slowapi",
+  "pytest",
+  "ruff",
+  "black"
+]
